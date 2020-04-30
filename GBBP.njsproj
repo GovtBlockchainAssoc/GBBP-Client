@@ -1,0 +1,202 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>blankts</Name>
+    <RootNamespace>blankts</RootNamespace>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>df1fa262-b4ab-4186-8d4b-f1afa78e4738</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>server.ts</StartupFile>
+    <StartWebBrowser>True</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <NodejsPort>1337</NodejsPort>
+    <EnableTypeScript>true</EnableTypeScript>
+    <StartWebBrowser>True</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="build\contracts\Context.json" />
+    <Content Include="build\contracts\ERC20.json" />
+    <Content Include="build\contracts\ERC20Detailed.json" />
+    <Content Include="build\contracts\ERC20Mintable.json" />
+    <Content Include="build\contracts\ERC20Pausable.json" />
+    <Content Include="build\contracts\GBAToken.json" />
+    <Content Include="build\contracts\GBAToken.sol" />
+    <Content Include="build\contracts\IERC20.json" />
+    <Content Include="build\contracts\Initializable.json" />
+    <Content Include="build\contracts\MemberInfo.json" />
+    <Content Include="build\contracts\MemberInfo.sol" />
+    <Content Include="build\contracts\MinterRole.json" />
+    <Content Include="build\contracts\Pausable.json" />
+    <Content Include="build\contracts\PauserRole.json" />
+    <Content Include="build\contracts\Roles.json" />
+    <Content Include="build\contracts\SafeMath.json" />
+    <Content Include="build\contracts\StandaloneERC20.json" />
+    <Content Include="index.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\PageTitle\package.json" />
+    <Content Include="src\components\UserAvatar\package.json" />
+    <Content Include="src\components\Widget\package.json" />
+    <Content Include="src\components\Wrappers\package.json" />
+    <Content Include="src\config.ts" />
+    <Content Include="src\images\google.svg" />
+    <Content Include="src\pages\charts\Charts.tsx" />
+    <Content Include="src\pages\charts\components\ApexHeatmap.tsx" />
+    <Content Include="src\pages\charts\components\ApexLineChart.tsx" />
+    <Content Include="src\pages\dashboard\components\BigStat\BigStat.tsx" />
+    <Content Include="src\pages\dashboard\components\BigStat\styles.js" />
+    <Content Include="src\pages\dashboard\Dashboard.tsx" />
+    <Content Include="src\pages\dashboard\mock.js" />
+    <Content Include="src\pages\dashboard\package.json" />
+    <Content Include="src\pages\dashboard\styles.js" />
+    <Content Include="src\pages\icons\Icons.tsx" />
+    <Content Include="src\pages\icons\styles.js" />
+    <Content Include="src\pages\leaderboard\LeaderBoard.tsx" />
+    <Content Include="src\pages\notifications\Notifications.tsx" />
+    <Content Include="src\pages\notifications\NotificationsContainer.tsx" />
+    <Content Include="src\pages\notifications\NotificationsView.tsx" />
+    <Content Include="src\pages\notifications\styles.js" />
+    <Content Include="src\pages\tables\Tables.tsx" />
+    <Content Include="src\pages\typography\styles.js" />
+    <Content Include="src\pages\typography\Typography.tsx" />
+    <Content Include="webpack-config.js">
+      <SubType>Code</SubType>
+    </Content>
+    <None Include="server.ts" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config" />
+    <Content Include="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="build\" />
+    <Folder Include="build\contracts\" />
+    <Folder Include="src\" />
+    <Folder Include="src\components\" />
+    <Folder Include="src\components\Header\" />
+    <Folder Include="src\components\Layout\" />
+    <Folder Include="src\components\Login\" />
+    <Folder Include="src\components\Dialogs\" />
+    <Folder Include="src\components\Notification\" />
+    <Folder Include="src\components\PageTitle\" />
+    <Folder Include="src\components\Sidebar\" />
+    <Folder Include="src\components\Sidebar\components\" />
+    <Folder Include="src\components\Sidebar\components\SidebarLink\" />
+    <Folder Include="src\components\Table\" />
+    <Folder Include="src\components\UserAvatar\" />
+    <Folder Include="src\components\Widget\" />
+    <Folder Include="src\components\Wrappers\" />
+    <Folder Include="src\context\" />
+    <Folder Include="src\images\" />
+    <Folder Include="src\pages\" />
+    <Folder Include="src\pages\charts\" />
+    <Folder Include="src\pages\charts\components\" />
+    <Folder Include="src\pages\dashboard\" />
+    <Folder Include="src\pages\dashboard\components\" />
+    <Folder Include="src\pages\dashboard\components\BigStat\" />
+    <Folder Include="src\pages\icons\" />
+    <Folder Include="src\pages\leaderboard\" />
+    <Folder Include="src\pages\gbadirectory\" />
+    <Folder Include="src\pages\home\" />
+    <Folder Include="src\pages\gbadao\" />
+    <Folder Include="src\pages\notifications\" />
+    <Folder Include="src\pages\tables\" />
+    <Folder Include="src\pages\typography\" />
+    <Folder Include="src\pages\wallet\" />
+    <Folder Include="src\pages\tokentut\" />
+    <Folder Include="src\themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app.tsx" />
+    <TypeScriptCompile Include="src\components\Dialogs\TextDialog.tsx" />
+    <TypeScriptCompile Include="src\components\Header\Header.tsx" />
+    <TypeScriptCompile Include="src\components\Header\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
+    <TypeScriptCompile Include="src\components\Layout\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Login\Login.tsx" />
+    <TypeScriptCompile Include="src\components\Notification\Notification.tsx" />
+    <TypeScriptCompile Include="src\components\Notification\styles.tsx" />
+    <TypeScriptCompile Include="src\components\PageTitle\PageTitle.tsx" />
+    <TypeScriptCompile Include="src\components\PageTitle\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Sidebar\components\Dot.tsx" />
+    <TypeScriptCompile Include="src\components\Sidebar\components\SidebarLink\SidebarLink.tsx" />
+    <TypeScriptCompile Include="src\components\Sidebar\components\SidebarLink\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Sidebar\Sidebar.tsx" />
+    <TypeScriptCompile Include="src\components\Sidebar\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Table\Table.tsx" />
+    <TypeScriptCompile Include="src\components\UserAvatar\styles.tsx" />
+    <TypeScriptCompile Include="src\components\UserAvatar\UserAvatar.tsx" />
+    <TypeScriptCompile Include="src\components\Widget\styles.tsx" />
+    <TypeScriptCompile Include="src\components\Widget\Widget.tsx" />
+    <TypeScriptCompile Include="src\components\Widget\WidgetView.tsx" />
+    <TypeScriptCompile Include="src\components\Wrappers\Wrappers.tsx" />
+    <TypeScriptCompile Include="src\context\LayoutContext.tsx" />
+    <TypeScriptCompile Include="src\pages\gbadao\GBADAO.tsx" />
+    <TypeScriptCompile Include="src\pages\gbadirectory\GBADirectory.tsx" />
+    <TypeScriptCompile Include="src\pages\home\Home.tsx" />
+    <TypeScriptCompile Include="src\pages\tokentut\TokenTutorial.tsx" />
+    <TypeScriptCompile Include="src\pages\wallet\Wallet.tsx" />
+    <TypeScriptCompile Include="src\themes\default.tsx" />
+    <TypeScriptCompile Include="src\themes\index.tsx" />
+    <TypeScriptCompile Include="svg.d.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
