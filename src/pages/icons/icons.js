@@ -3191,4 +3191,4 @@ function IconsPage() {
                         react_1.default.createElement(core_1.Typography, { className: classes.materialIconText }, "Yahoo"))))))));
 }
 exports.default = IconsPage;
-//# sourceMappingURL=icons.js.map
+//# sourceMappingURL=Icons.js.map

@@ -4,7 +4,7 @@ import { Drawer, IconButton, List } from "@material-ui/core";
 import {
     Home as HomeIcon, TextFields as TutorialIcon, StarRate as LeaderIcon, Toll as WalletIcon, People as DirectoryIcon, HowToVote as DAOIcon, 
     Dashboard as DashboardIcon, NotificationsNone as NotificationsIcon, Title as TypographyIcon, FilterNone as UIElementsIcon,
-    InsertEmoticon as IconIcon, PieChart as ChartIcon, BorderAll as TableIcon, Help as HelpIcon, ArrowBack as ArrowBackIcon
+    InsertEmoticon as IconIcon, PieChart as ChartIcon, BorderAll as TableIcon, Help as HelpIcon, ArrowBack as ArrowBackIcon, HowToVoteOutlined
 } from "@material-ui/icons";
 import { createMuiTheme } from '@material-ui/core/styles';
 import classNames from "classnames";
@@ -36,7 +36,8 @@ const structure = [
             //            { label: "Maps", link: "/app/examples/maps" },
         ],
     },
-    { id: 5, type: "divider" },
+    { id: 8, type: "divider" },
+    { id: 9, label: "Voting Demo", link: "/app/votingdemo", icon: <HowToVoteOutlined /> },
     //{ id: 6, type: "title", label: "HELP" },
     //{ id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
     //{ id: 8, label: "Support", link: "", icon: <SupportIcon /> },

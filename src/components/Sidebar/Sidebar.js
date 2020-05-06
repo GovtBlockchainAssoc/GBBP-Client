@@ -37,7 +37,8 @@ const structure = [
             { label: "Charts", link: "/app/examples/charts", icon: react_1.default.createElement(icons_1.PieChart, null) },
         ],
     },
-    { id: 5, type: "divider" },
+    { id: 8, type: "divider" },
+    { id: 9, label: "Voting Demo", link: "/app/votingdemo", icon: react_1.default.createElement(icons_1.HowToVoteOutlined, null) },
 ];
 function Sidebar({ location }) {
     var classes = styles_2.default();

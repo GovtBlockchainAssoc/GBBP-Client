@@ -57,6 +57,9 @@
     <Content Include="src\components\Wrappers\package.json" />
     <Content Include="src\config.ts" />
     <Content Include="src\images\google.svg" />
+    <Content Include="src\images\QR1.png" />
+    <Content Include="src\images\QR2.png" />
+    <Content Include="src\images\QR3.png" />
     <Content Include="src\pages\charts\Charts.tsx" />
     <Content Include="src\pages\charts\components\ApexHeatmap.tsx" />
     <Content Include="src\pages\charts\components\ApexLineChart.tsx" />
@@ -123,6 +126,7 @@
     <Folder Include="src\pages\wallet\" />
     <Folder Include="src\pages\tokentut\" />
     <Folder Include="src\themes\" />
+    <Folder Include="src\pages\voting\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\app.tsx" />
@@ -156,6 +160,7 @@
     <TypeScriptCompile Include="src\pages\wallet\Wallet.tsx" />
     <TypeScriptCompile Include="src\themes\default.tsx" />
     <TypeScriptCompile Include="src\themes\index.tsx" />
+    <TypeScriptCompile Include="src\pages\voting\VotingDemo.tsx" />
     <TypeScriptCompile Include="svg.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
