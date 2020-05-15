@@ -4,7 +4,7 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } 
 import { Button } from "../Wrappers/Wrappers";
 const config = require('../../config');
 
-export default function LoginDialog() {
+export default function GBALoginDialog() {
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => { setOpen(true); };
     const handleLogin = () => {
@@ -17,11 +17,13 @@ export default function LoginDialog() {
 
     return (
         <div>
-            <Button className variant={"outlined"} color={"secondary"} style={{ marginLeft: 24 }} onClick={handleClickOpen}>Log In</Button>
+            <Button className variant={"outlined"} color={"secondary"} style={{ marginLeft: 24 }} onClick={handleClickOpen}>GBA Log In</Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Login</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
+                        This login is for GBA members only.  If you are not a GBA member (or if the GBA 
+                        test server is down), please use the Wallet Login instead.<br /><br /><hr /><br />
                         The GBBP uses Single Sign-On (currently against the GBA *test* server).
                         To log in, click <a href='http://www.gbaglobal.net' target="_blank">here</a> to
                         open a new tab/window to the GBA test server, 

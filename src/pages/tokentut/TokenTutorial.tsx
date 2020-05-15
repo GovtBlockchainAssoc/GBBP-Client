@@ -25,12 +25,13 @@ const useStyles = makeStyles(theme => ({
     help: { color: '#0000FF', },
 }));
 
-const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Connect to Sokol & Get Sokol Ether',
-    'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
+const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Send From Your Wallet',
+    'Get Sokol Ether', 'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
 
 export default function VerticalLinearStepper() {
     const classes = useStyles();
     const [val, setVal] = useGlobal('val');
+    const [val2, setVal2] = useGlobal('val2');
     const [userInfo, setUserInfo] = useGlobal('userInfo');
     const [activeStep, updateActiveStep] = useGlobal('activeStep');
     const setActiveStep = (val) => { updateActiveStep(val); updateSubstep(val * 10); }
@@ -38,6 +39,9 @@ export default function VerticalLinearStepper() {
     const setSubstep = (val) => { if (val != substep) updateSubstep(val); }
     var PoAAddr = userInfo.PoAAddr;
     if (userInfo.Id == 0 && activeStep != 0) setActiveStep(0);
+
+    let stepText = {
+    }
 
     let substeps = {
         0: ["", < div > Please click on the red Log In button in the upper right corner and log in</div>],
@@ -52,11 +56,11 @@ export default function VerticalLinearStepper() {
         30: ["", <div>Use Metamask to send yourself a token</div>],
         31: ["", <div>I'm sorry.  I don't see a record of you sending a token.  It may take a minute or two to register though . . . . </div>, ""],
         32: [<div>Excellent! Your wallet screen will be activated when you click next.</div>, ""],
-        40: ["", <div>Sign up for a non-Ethereum blockchain (or two). <a target='_blank' href='https://signup.hive.io/'>Hive</a> <a target='_blank' href='https://signup.steemit.com/'>Steem</a></div>],
-        41: ["", <div>Coming tomorrow!</div>, ""],
-//        41: ["", <div>What is/are your username(s)?</div>, ""],
-        42: ["", <div>I'm sorry.  I can't find that username.</div>, ""],
-        43: [<div>Excellent! Your wallet screen has been activated</div>, ""],
+        40: ["", <div>Sign up for the Hive blockchain (and, optionally, Steem). <a target='_blank' href='https://signup.hive.io/'>Hive</a> <a target='_blank' href='https://signup.steemit.com/'>Steem</a></div>],
+        41: ["", <div>What user name(s) did you select?</div>, ""],
+        42: ["", <div>I'm sorry.  That Hive username does not appear to be valid.</div>, ""],
+        43: ["", <div>I'm sorry.  That Steem username does not appear to be valid.</div>, ""],
+        44: [<div>Excellent! If you blog, a number of GBA-related accounts will upvote you for money (coming May 15th)</div>, ""],
         50: ["", <div>Let's connect to Sokol and get some Ether</div>],
         51: ["", <div>I'm sorry.  I don't see any Sokol ether in your wallet.</div>, ""],
         52: [<div>Excellent! You'll need that Sokol ether shortly.</div>, ""],
@@ -79,7 +83,8 @@ export default function VerticalLinearStepper() {
     }
 
     let helpMsg = {
-        40: ["Steem is a blockchain that pays you for blogging launched in 2016.  Hive is a fork of Steem after a hostile takeover and likely more hospitable."],
+        40: [`Steem is a blockchain that pays you for blogging launched in 2016.  Hive is a fork of Steem after a hostile takeover by Justin Sun.
+Hive is likely more hospitable and has doubled in value since the split thus making blogging on it worth twice as much.`],
     }
 
     const checkWeb3 = async (cb) => {
@@ -109,7 +114,8 @@ export default function VerticalLinearStepper() {
                 checkWeb3(() => {
                     const contr = new web3.eth.Contract(gbaToken.abi, config.playToken.address, { data: gbaToken.bytecode })
                     contr.methods.balanceOf(PoAAddr).call((err, bal) => {
-                        if (err) alert("balanceOf ERROR: " + err); else if (val * 100 != bal) setSubstep(21); else setSubstep(22);
+                        if (err) alert("balanceOf ERROR: " + err);
+                        else if (Math.round(val * 100) != bal) { setSubstep(21); } else { setSubstep(22); setVal(''); }
                     });
                 });
                 break;
@@ -119,7 +125,16 @@ export default function VerticalLinearStepper() {
                 });
                 break;
             case 4:
-                if (retry) setSubstep(41);
+                if (substep == 40 && !retry) return;
+                if (retry) { setSubstep(41); return; }
+                if (val == undefined || val == '') return;
+                alert('https://hive.blog/@' + val);
+                if (substep < 43) axios.get('https://steemit.com/@' + val).then(() => { alert("hive good"); setSubstep(43); })
+                    .catch((error) => { alert("hive bad"); alert(error); setSubstep(42); });
+                if (substep < 43) return;
+                if (val2 == undefined || val2 == '') { setSubstep(44); return; }
+                axios.get('https://steemit.com/@' + val2).then(() => { alert("steem good"); setSubstep(44); })
+                    .catch(function (error) { alert("steem bad"); })
                 break;
         }
     }
@@ -138,6 +153,7 @@ export default function VerticalLinearStepper() {
     const handleRetry = () => { var oldStep = activeStep; getStepContent(true); if (activeStep > oldStep) updateSubstep(activeStep * 10); };
     const handleReset = () => { setActiveStep(0); };
     const help = () => { alert(helpMsg[substep]); }
+    // alert(substep);
 
     return (
         <div className={classes.root}>
@@ -155,10 +171,12 @@ export default function VerticalLinearStepper() {
                                     <Button disabled={substeps[substep][0] == ""} variant="contained" color="primary" onClick={handleNext} className={classes.button} >
                                         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
-                                    {substeps[substep][0] == "" && !([20, 21].includes(substep)) &&
+                                    {substeps[substep][0] == "" && !([20, 21, 41, 42, 43].includes(substep)) &&
                                         <Button variant="contained" color="primary" onClick={handleRetry} className={classes.button} > Ready </Button>}
                                     {[20, 21].includes(substep) &&
-                                        <TextDialog anchor='Answer' title='PLAY Tokens' text="Don't forget the decimal part!" label label2='tokens' subText='Submit' />}
+                                        <TextDialog anchor='Answer' title='PLAY Tokens' text="Don't forget the decimal part!" label label2='tokens' btnText='Submit' />}
+                                    {[41, 42].includes(substep) &&
+                                        <TextDialog anchor='Answer' title='Steem/Hive Account Name(s)' text='Please enter at least one.' label='  &nbsp; &nbsp;Hive:' label2='(required)' btnText='Submit' label3='Steem:' label4='(optional)' />}
                                 </div>
                             </div>
                         </StepContent>

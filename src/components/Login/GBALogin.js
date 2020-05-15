@@ -12,7 +12,7 @@ const reactn_1 = require("reactn");
 const core_1 = require("@material-ui/core");
 const Wrappers_1 = require("../Wrappers/Wrappers");
 const config = require('../../config');
-function LoginDialog() {
+function GBALoginDialog() {
     const [open, setOpen] = react_1.useState(false);
     const handleClickOpen = () => { setOpen(true); };
     const handleLogin = () => {
@@ -25,11 +25,16 @@ function LoginDialog() {
     };
     const handleClose = () => { setOpen(false); };
     return (react_1.default.createElement("div", null,
-        react_1.default.createElement(Wrappers_1.Button, { className: true, variant: "outlined", color: "secondary", style: { marginLeft: 24 }, onClick: handleClickOpen }, "Log In"),
+        react_1.default.createElement(Wrappers_1.Button, { className: true, variant: "outlined", color: "secondary", style: { marginLeft: 24 }, onClick: handleClickOpen }, "GBA Log In"),
         react_1.default.createElement(core_1.Dialog, { open: open, onClose: handleClose, "aria-labelledby": "form-dialog-title" },
             react_1.default.createElement(core_1.DialogTitle, { id: "form-dialog-title" }, "Login"),
             react_1.default.createElement(core_1.DialogContent, null,
                 react_1.default.createElement(core_1.DialogContentText, null,
+                    "This login is for GBA members only.  If you are not a GBA member (or if the GBA test server is down), please use the Wallet Login instead.",
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("hr", null),
+                    react_1.default.createElement("br", null),
                     "The GBBP uses Single Sign-On (currently against the GBA *test* server). To log in, click ",
                     react_1.default.createElement("a", { href: 'http://www.gbaglobal.net', target: "_blank" }, "here"),
                     " to open a new tab/window to the GBA test server, Your user name & password are identical to those on the GBA web server. Once you log in, leave the window/tab open and return here. Clear the Remember Me checkbox if you do NOT wish to stay logged in and click the LOGIN button below. ",
@@ -45,5 +50,5 @@ function LoginDialog() {
                 react_1.default.createElement(Wrappers_1.Button, { className: true, onClick: handleClose, color: "primary" }, "Cancel"),
                 react_1.default.createElement(Wrappers_1.Button, { className: true, onClick: handleLogin, color: "primary" }, "Login")))));
 }
-exports.default = LoginDialog;
-//# sourceMappingURL=Login.js.map
+exports.default = GBALoginDialog;
+//# sourceMappingURL=GBALogin.js.map

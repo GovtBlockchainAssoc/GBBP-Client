@@ -43,11 +43,12 @@ const useStyles = styles_1.makeStyles(theme => ({
     message: { marginTop: 20 },
     help: { color: '#0000FF', },
 }));
-const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Connect to Sokol & Get Sokol Ether',
-    'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
+const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Send From Your Wallet',
+    'Get Sokol Ether', 'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
 function VerticalLinearStepper() {
     const classes = useStyles();
     const [val, setVal] = useGlobal('val');
+    const [val2, setVal2] = useGlobal('val2');
     const [userInfo, setUserInfo] = useGlobal('userInfo');
     const [activeStep, updateActiveStep] = useGlobal('activeStep');
     const setActiveStep = (val) => { updateActiveStep(val); updateSubstep(val * 10); };
@@ -57,6 +58,7 @@ function VerticalLinearStepper() {
     var PoAAddr = userInfo.PoAAddr;
     if (userInfo.Id == 0 && activeStep != 0)
         setActiveStep(0);
+    let stepText = {};
     let substeps = {
         0: ["", react_1.default.createElement("div", null, " Please click on the red Log In button in the upper right corner and log in")],
         1: [react_1.default.createElement("div", null,
@@ -85,14 +87,14 @@ function VerticalLinearStepper() {
         31: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see a record of you sending a token.  It may take a minute or two to register though . . . . "), ""],
         32: [react_1.default.createElement("div", null, "Excellent! Your wallet screen will be activated when you click next."), ""],
         40: ["", react_1.default.createElement("div", null,
-                "Sign up for a non-Ethereum blockchain (or two). ",
+                "Sign up for the Hive blockchain (and, optionally, Steem). ",
                 react_1.default.createElement("a", { target: '_blank', href: 'https://signup.hive.io/' }, "Hive"),
                 " ",
                 react_1.default.createElement("a", { target: '_blank', href: 'https://signup.steemit.com/' }, "Steem"))],
-        41: ["", react_1.default.createElement("div", null, "Coming tomorrow!"), ""],
-        //        41: ["", <div>What is/are your username(s)?</div>, ""],
-        42: ["", react_1.default.createElement("div", null, "I'm sorry.  I can't find that username."), ""],
-        43: [react_1.default.createElement("div", null, "Excellent! Your wallet screen has been activated"), ""],
+        41: ["", react_1.default.createElement("div", null, "What user name(s) did you select?"), ""],
+        42: ["", react_1.default.createElement("div", null, "I'm sorry.  That Hive username does not appear to be valid."), ""],
+        43: ["", react_1.default.createElement("div", null, "I'm sorry.  That Steem username does not appear to be valid."), ""],
+        44: [react_1.default.createElement("div", null, "Excellent! If you blog, a number of GBA-related accounts will upvote you for money (coming May 15th)"), ""],
         50: ["", react_1.default.createElement("div", null, "Let's connect to Sokol and get some Ether")],
         51: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Sokol ether in your wallet."), ""],
         52: [react_1.default.createElement("div", null, "Excellent! You'll need that Sokol ether shortly."), ""],
@@ -114,7 +116,8 @@ function VerticalLinearStepper() {
         90: [react_1.default.createElement("div", null, "You've completed the tutorial and been sent a GBA reward token."), ""]
     };
     let helpMsg = {
-        40: ["Steem is a blockchain that pays you for blogging launched in 2016.  Hive is a fork of Steem after a hostile takeover and likely more hospitable."],
+        40: [`Steem is a blockchain that pays you for blogging launched in 2016.  Hive is a fork of Steem after a hostile takeover by Justin Sun.
+Hive is likely more hospitable and has doubled in value since the split thus making blogging on it worth twice as much.`],
     };
     const checkWeb3 = (cb) => __awaiter(this, void 0, void 0, function* () {
         web3 = new Web3(window['ethereum']);
@@ -157,10 +160,13 @@ function VerticalLinearStepper() {
                     contr.methods.balanceOf(PoAAddr).call((err, bal) => {
                         if (err)
                             alert("balanceOf ERROR: " + err);
-                        else if (val * 100 != bal)
+                        else if (Math.round(val * 100) != bal) {
                             setSubstep(21);
-                        else
+                        }
+                        else {
                             setSubstep(22);
+                            setVal('');
+                        }
                     });
                 });
                 break;
@@ -173,8 +179,26 @@ function VerticalLinearStepper() {
                 });
                 break;
             case 4:
-                if (retry)
+                if (substep == 40 && !retry)
+                    return;
+                if (retry) {
                     setSubstep(41);
+                    return;
+                }
+                if (val == undefined || val == '')
+                    return;
+                alert('https://hive.blog/@' + val);
+                if (substep < 43)
+                    axios_1.default.get('https://steemit.com/@' + val).then(() => { alert("hive good"); setSubstep(43); })
+                        .catch((error) => { alert("hive bad"); alert(error); setSubstep(42); });
+                if (substep < 43)
+                    return;
+                if (val2 == undefined || val2 == '') {
+                    setSubstep(44);
+                    return;
+                }
+                axios_1.default.get('https://steemit.com/@' + val2).then(() => { alert("steem good"); setSubstep(44); })
+                    .catch(function (error) { alert("steem bad"); });
                 break;
         }
     }
@@ -197,6 +221,7 @@ function VerticalLinearStepper() {
         updateSubstep(activeStep * 10); };
     const handleReset = () => { setActiveStep(0); };
     const help = () => { alert(helpMsg[substep]); };
+    // alert(substep);
     return (react_1.default.createElement("div", { className: classes.root },
         getStepContent(),
         react_1.default.createElement(core_1.Stepper, { activeStep: activeStep, orientation: "vertical" }, steps.map((label, index) => (react_1.default.createElement(core_1.Step, { key: label },
@@ -213,10 +238,12 @@ function VerticalLinearStepper() {
                     react_1.default.createElement("div", null,
                         react_1.default.createElement(core_1.Button, { disabled: activeStep === 0, onClick: handleBack, className: classes.button }, "Back"),
                         react_1.default.createElement(core_1.Button, { disabled: substeps[substep][0] == "", variant: "contained", color: "primary", onClick: handleNext, className: classes.button }, activeStep === steps.length - 1 ? 'Finish' : 'Next'),
-                        substeps[substep][0] == "" && !([20, 21].includes(substep)) &&
+                        substeps[substep][0] == "" && !([20, 21, 41, 42, 43].includes(substep)) &&
                             react_1.default.createElement(core_1.Button, { variant: "contained", color: "primary", onClick: handleRetry, className: classes.button }, " Ready "),
                         [20, 21].includes(substep) &&
-                            react_1.default.createElement(TextDialog_1.default, { anchor: 'Answer', title: 'PLAY Tokens', text: "Don't forget the decimal part!", label: true, label2: 'tokens', subText: 'Submit' })))))))),
+                            react_1.default.createElement(TextDialog_1.default, { anchor: 'Answer', title: 'PLAY Tokens', text: "Don't forget the decimal part!", label: true, label2: 'tokens', btnText: 'Submit' }),
+                        [41, 42].includes(substep) &&
+                            react_1.default.createElement(TextDialog_1.default, { anchor: 'Answer', title: 'Steem/Hive Account Name(s)', text: 'Please enter at least one.', label: '  \u00A0 \u00A0Hive:', label2: '(required)', btnText: 'Submit', label3: 'Steem:', label4: '(optional)' })))))))),
         activeStep === steps.length && (react_1.default.createElement(core_1.Paper, { square: true, elevation: 0, className: classes.resetContainer },
             react_1.default.createElement(core_1.Typography, null, "All steps completed - you're finished"),
             react_1.default.createElement(core_1.Button, { onClick: handleReset, className: classes.button }, "Reset")))));

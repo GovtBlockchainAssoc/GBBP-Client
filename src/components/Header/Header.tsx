@@ -3,7 +3,7 @@ var reactn = require('reactn');
 var useGlobal = reactn.useGlobal;
 import { withRouter } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, InputBase, Menu, MenuItem, Fab, Link } from "@material-ui/core";
-import {
+import { 
     Menu as MenuIcon, MailOutline as MailIcon, NotificationsNone as NotificationsIcon, Person as AccountIcon,
     Search as SearchIcon, Send as SendIcon, ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
@@ -15,7 +15,8 @@ import useStyles from "./styles";
 
 import { Badge, Typography, Button } from "../Wrappers/Wrappers";
 import Notification from "../Notification/Notification";
-import LoginDialog from "../Login/Login";
+import GBALoginDialog from "../Login/GBALogin";
+import WalletLoginDialog from "../Login/WalletLogin";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
 import { useLayoutState, useLayoutDispatch, toggleSidebar, } from "../../context/LayoutContext";
@@ -140,7 +141,7 @@ function Header(props) {
                             </div>
                         </Menu>
                     </>}
-                {(userInfo == null) || userInfo.Id == 0 ? <LoginDialog /> : null}
+                {(userInfo == null) || userInfo.Id == 0 ? <><GBALoginDialog /> &nbsp; <WalletLoginDialog /></> : null}
             </Toolbar>
         </AppBar >
     );

@@ -22,7 +22,8 @@ const cookies = new universal_cookie_1.default();
 const styles_1 = __importDefault(require("./styles"));
 const Wrappers_1 = require("../Wrappers/Wrappers");
 const Notification_1 = __importDefault(require("../Notification/Notification"));
-const Login_1 = __importDefault(require("../Login/Login"));
+const GBALogin_1 = __importDefault(require("../Login/GBALogin"));
+const WalletLogin_1 = __importDefault(require("../Login/WalletLogin"));
 const UserAvatar_1 = __importDefault(require("../UserAvatar/UserAvatar"));
 const LayoutContext_1 = require("../../context/LayoutContext");
 const messages = [
@@ -102,7 +103,10 @@ function Header(props) {
                             " Messages"),
                         react_1.default.createElement("div", { className: classes.profileMenuUser },
                             react_1.default.createElement(Wrappers_1.Typography, { className: classes.profileMenuLink, color: "primary", onClick: logout, weight: true, size: true, colorBrightness: true }, "Sign Out")))),
-            (userInfo == null) || userInfo.Id == 0 ? react_1.default.createElement(Login_1.default, null) : null)));
+            (userInfo == null) || userInfo.Id == 0 ? react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement(GBALogin_1.default, null),
+                " \u00A0 ",
+                react_1.default.createElement(WalletLogin_1.default, null)) : null)));
 }
 exports.default = react_router_dom_1.withRouter(Header);
 //# sourceMappingURL=Header.js.map

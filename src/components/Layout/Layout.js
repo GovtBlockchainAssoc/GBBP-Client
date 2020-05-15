@@ -9,18 +9,18 @@ const classnames_1 = __importDefault(require("classnames"));
 const styles_1 = __importDefault(require("./styles"));
 const Header_1 = __importDefault(require("../Header/Header"));
 const Sidebar_1 = __importDefault(require("../Sidebar/Sidebar"));
-//import Home from "../../pages/home/Home";
+const Home_1 = __importDefault(require("../../pages/home/Home"));
 const TokenTutorial_1 = __importDefault(require("../../pages/tokentut/TokenTutorial"));
-//import LeaderBoard from "../../pages/leaderboard/LeaderBoard";
-//import Dashboard from "../../pages/dashboard";
-//import Wallet from "../../pages/wallet/Wallet";
-//import GBADirectory from "../../pages/gbadirectory/GBADirectory";
-//import GBADAO from "../../pages/gbadao/GBADAO";
-//import Typography from "../../pages/typography/Typography";
-//import Notifications from "../../pages/notifications/Notifications";
-//import Tables from "../../pages/tables/Tables";
-//import Icons from "../../pages/icons/icons";
-//import Charts from "../../pages/charts/Charts";
+const LeaderBoard_1 = __importDefault(require("../../pages/leaderboard/LeaderBoard"));
+const dashboard_1 = __importDefault(require("../../pages/dashboard"));
+const Wallet_1 = __importDefault(require("../../pages/wallet/Wallet"));
+const GBADirectory_1 = __importDefault(require("../../pages/gbadirectory/GBADirectory"));
+const GBADAO_1 = __importDefault(require("../../pages/gbadao/GBADAO"));
+const Typography_1 = __importDefault(require("../../pages/typography/Typography"));
+const Notifications_1 = __importDefault(require("../../pages/notifications/Notifications"));
+const Tables_1 = __importDefault(require("../../pages/tables/Tables"));
+const icons_1 = __importDefault(require("../../pages/icons/icons"));
+const Charts_1 = __importDefault(require("../../pages/charts/Charts"));
 const VotingDemo_1 = __importDefault(require("../../pages/voting/VotingDemo"));
 const LayoutContext_1 = require("../../context/LayoutContext");
 function Layout(props) {
@@ -33,18 +33,18 @@ function Layout(props) {
             react_1.default.createElement("div", { className: classes.fakeToolbar }),
             react_1.default.createElement(react_router_dom_1.Switch, null,
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/app/tutorial", component: TokenTutorial_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/votingdemo", component: VotingDemo_1.default })))));
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/votingdemo", component: VotingDemo_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/home", component: Home_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/leaderboard", component: LeaderBoard_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/wallet", component: Wallet_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/gbadirectory", component: GBADirectory_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/gbadao", component: GBADAO_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/dashboard", component: dashboard_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/typography", component: Typography_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/tables", component: Tables_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/notifications", component: Notifications_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/icons", component: icons_1.default }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/app/examples/charts", component: Charts_1.default })))));
 }
-//<Route path="/home" component={Home} />
-//<Route path="/app/leaderboard" component={LeaderBoard} />
-//<Route path="/app/wallet" component={Wallet} />
-//<Route path="/app/gbadirectory" component={GBADirectory} />
-//<Route path="/app/gbadao" component={GBADAO} />
-//<Route path="/app/examples/dashboard" component={Dashboard} />
-//<Route path="/app/examples/typography" component={Typography} />
-//<Route path="/app/examples/tables" component={Tables} />
-//<Route path="/app/examples/notifications" component={Notifications} />
-//<Route path="/app/examples/icons" component={Icons} />
-//<Route path="/app/examples/charts" component={Charts} />
 exports.default = react_router_dom_1.withRouter(Layout);
 //# sourceMappingURL=Layout.js.map

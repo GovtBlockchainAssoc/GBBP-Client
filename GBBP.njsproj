@@ -96,8 +96,8 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\Header\" />
     <Folder Include="src\components\Layout\" />
-    <Folder Include="src\components\Login\" />
     <Folder Include="src\components\Dialogs\" />
+    <Folder Include="src\components\Login\" />
     <Folder Include="src\components\Notification\" />
     <Folder Include="src\components\PageTitle\" />
     <Folder Include="src\components\Sidebar\" />
@@ -135,7 +135,8 @@
     <TypeScriptCompile Include="src\components\Header\styles.tsx" />
     <TypeScriptCompile Include="src\components\Layout\Layout.tsx" />
     <TypeScriptCompile Include="src\components\Layout\styles.tsx" />
-    <TypeScriptCompile Include="src\components\Login\Login.tsx" />
+    <TypeScriptCompile Include="src\components\Login\GBALogin.tsx" />
+    <TypeScriptCompile Include="src\components\Login\WalletLogin.tsx" />
     <TypeScriptCompile Include="src\components\Notification\Notification.tsx" />
     <TypeScriptCompile Include="src\components\Notification\styles.tsx" />
     <TypeScriptCompile Include="src\components\PageTitle\PageTitle.tsx" />
