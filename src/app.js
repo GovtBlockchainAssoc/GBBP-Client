@@ -39,7 +39,7 @@ function App() {
     }
     let code = new URLSearchParams(window.location.search).get('code');
     if (code != null) {
-        axios_1.default.post(config.apiUrl + '/api/user/login', { "code": code }).then((response) => {
+        axios_1.default.post(config.apiUrl + '/api/user/gbaLogin', { "code": code }).then((response) => {
             cookies.set('userInfo', response.data, { path: '/', maxAge: 10000000 });
             setUserInfo(response.data);
             window.location.href = '/';

@@ -43,8 +43,8 @@ const useStyles = styles_1.makeStyles(theme => ({
     message: { marginTop: 20 },
     help: { color: '#0000FF', },
 }));
-const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Send From Your Wallet',
-    'Get Sokol Ether', 'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
+const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Hive Account', 'Send to & from Hive',
+    'Get Sokol Ether', 'Send to & from Sokol', 'Send from Hive to Sokol & back', 'Get a Reward Token'];
 function VerticalLinearStepper() {
     const classes = useStyles();
     const [val, setVal] = useGlobal('val');
@@ -55,7 +55,7 @@ function VerticalLinearStepper() {
     const [substep, updateSubstep] = react_1.useState(0);
     const setSubstep = (val) => { if (val != substep)
         updateSubstep(val); };
-    var PoAAddr = userInfo.PoAAddr;
+    var Address = userInfo.PoAAddr;
     if (userInfo.Id == 0 && activeStep != 0)
         setActiveStep(0);
     let stepText = {};
@@ -91,23 +91,23 @@ function VerticalLinearStepper() {
                 react_1.default.createElement("a", { target: '_blank', href: 'https://signup.hive.io/' }, "Hive"),
                 " ",
                 react_1.default.createElement("a", { target: '_blank', href: 'https://signup.steemit.com/' }, "Steem"))],
-        41: ["", react_1.default.createElement("div", null, "What user name(s) did you select?"), ""],
+        41: ["", react_1.default.createElement("div", null, "What user name(s) did you register?  In the future, this could also be done from Your Wallet."), ""],
         42: ["", react_1.default.createElement("div", null, "I'm sorry.  That Hive username does not appear to be valid."), ""],
         43: ["", react_1.default.createElement("div", null, "I'm sorry.  That Steem username does not appear to be valid."), ""],
         44: [react_1.default.createElement("div", null, "Excellent! If you blog, a number of GBA-related accounts will upvote you for money (coming May 15th)"), ""],
-        50: ["", react_1.default.createElement("div", null, "Let's connect to Sokol and get some Ether")],
-        51: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Sokol ether in your wallet."), ""],
-        52: [react_1.default.createElement("div", null, "Excellent! You'll need that Sokol ether shortly."), ""],
-        60: ["", react_1.default.createElement("div", null, "Use your wallet to send some Play tokens to Sokol ")],
-        61: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Play tokens in your Sokol wallet."), ""],
-        62: ["", react_1.default.createElement("div", null, "Great! Now use your wallet to send them back now.")],
-        63: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any transfers for you from Sokol."), ""],
-        64: [react_1.default.createElement("div", null, "Fantastic!  Sending tokens across blockchains isn't so hard, is it?"), ""],
-        70: ["", react_1.default.createElement("div", null, "Use your wallet to send some Play tokens to Hive and/or Steem. ")],
-        71: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Play tokens in your Hive or Steem wallets."), ""],
-        72: ["", react_1.default.createElement("div", null, "Excellent! Let's send them back now.")],
-        73: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any transfers for you from Hive or Steem."), ""],
-        74: [react_1.default.createElement("div", null, "Great!  Even non-Ethereum blockchains can send and receive GBA tokens."), ""],
+        50: ["", react_1.default.createElement("div", null, "Use your wallet to send some Play tokens to Hive and/or Steem. ")],
+        51: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Play tokens in your Hive or Steem wallets."), ""],
+        52: ["", react_1.default.createElement("div", null, "Excellent! Let's send them back now.")],
+        53: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any transfers for you from Hive or Steem."), ""],
+        54: [react_1.default.createElement("div", null, "Great!  Even non-Ethereum blockchains can send and receive GBA tokens."), ""],
+        60: ["", react_1.default.createElement("div", null, "Let's connect to Sokol and get some Ether")],
+        61: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Sokol ether in your wallet."), ""],
+        62: [react_1.default.createElement("div", null, "Excellent! You'll need that Sokol ether shortly."), ""],
+        70: ["", react_1.default.createElement("div", null, "Use your wallet to send some Play tokens to Sokol ")],
+        71: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Play tokens in your Sokol wallet."), ""],
+        72: ["", react_1.default.createElement("div", null, "Great! Now use your wallet to send them back now.")],
+        73: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any transfers for you from Sokol."), ""],
+        74: [react_1.default.createElement("div", null, "Fantastic!  Sending tokens across blockchains isn't so hard, is it?"), ""],
         80: ["", react_1.default.createElement("div", null, "It's time send some tokens from Hive and/or Steem to Sokol. ")],
         81: ["", react_1.default.createElement("div", null, "I'm sorry.  I don't see any Hive/Steem to Sokol transfers for you."), ""],
         82: ["", react_1.default.createElement("div", null, "Excellent! Let's send them back now.")],
@@ -130,7 +130,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
             if (accounts.length == 0)
                 setSubstep(12);
             else {
-                PoAAddr = accounts[0];
+                Address = accounts[0];
                 cb();
             }
         }
@@ -157,7 +157,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
                     return;
                 checkWeb3(() => {
                     const contr = new web3.eth.Contract(gbaToken.abi, config.playToken.address, { data: gbaToken.bytecode });
-                    contr.methods.balanceOf(PoAAddr).call((err, bal) => {
+                    contr.methods.balanceOf(Address).call((err, bal) => {
                         if (err)
                             alert("balanceOf ERROR: " + err);
                         else if (Math.round(val * 100) != bal) {
@@ -187,18 +187,37 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
                 }
                 if (val == undefined || val == '')
                     return;
-                alert('https://hive.blog/@' + val);
-                if (substep < 43)
-                    axios_1.default.get('https://steemit.com/@' + val).then(() => { alert("hive good"); setSubstep(43); })
-                        .catch((error) => { alert("hive bad"); alert(error); setSubstep(42); });
+                if (substep < 43) {
+                    var hive = require("@hiveio/hive-js");
+                    hive.api.setOptions({ url: config.hiveUrl });
+                    hive.config.set('alternative_api_endpoints', config.hiveAlts);
+                    hive.api.getAccounts([val], function (err, result) {
+                        if (result.length) {
+                            axios_1.default.post(config.apiUrl + '/api/user/update', {
+                                "GBAId": userInfo.GBAId, "step": activeStep, "Address": val, "BChain": 2
+                            });
+                            setSubstep(43);
+                        }
+                        else
+                            setSubstep(42);
+                    });
+                }
                 if (substep < 43)
                     return;
                 if (val2 == undefined || val2 == '') {
                     setSubstep(44);
                     return;
                 }
-                axios_1.default.get('https://steemit.com/@' + val2).then(() => { alert("steem good"); setSubstep(44); })
-                    .catch(function (error) { alert("steem bad"); });
+                var steem = require("steem");
+                steem.api.setOptions({ url: config.steemUrl });
+                steem.api.getAccounts([val2], function (err, result) {
+                    axios_1.default.post(config.apiUrl + '/api/user/update', {
+                        "GBAId": userInfo.GBAId, "step": activeStep, "Address": val2, "BChain": 3
+                    });
+                    if (result.length) {
+                        setSubstep(44);
+                    }
+                });
                 break;
         }
     }
@@ -209,7 +228,9 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
         }
         ;
         if (activeStep > userInfo.StatusId)
-            axios_1.default.post(config.apiUrl + '/api/user/tokenTut', { "GBAId": userInfo.GBAId, "step": activeStep, "PoAAddr": PoAAddr }).then((response) => {
+            axios_1.default.post(config.apiUrl + '/api/user/tokenTut', {
+                "GBAId": userInfo.GBAId, "step": activeStep, "Address": Address, "BChain": 1
+            }).then((response) => {
                 // alert("updated " + JSON.stringify(response.data));
                 cookies.set('userInfo', response.data, { path: '/', maxAge: 10000000 });
                 setUserInfo(response.data);

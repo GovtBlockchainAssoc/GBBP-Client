@@ -25,8 +25,8 @@ const useStyles = makeStyles(theme => ({
     help: { color: '#0000FF', },
 }));
 
-const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Steem and/or Hive Account', 'Send From Your Wallet',
-    'Get Sokol Ether', 'Send to & from Sokol', 'Send to & from Steem/Hive', 'Send from Steem/Hive to Sokol & back', 'Get a Reward Token'];
+const steps = ['Log In', 'Install MetaMask', 'Check Your Tokens', 'Send Tokens', 'Get a Hive Account', 'Send to & from Hive',
+    'Get Sokol Ether', 'Send to & from Sokol', 'Send from Hive to Sokol & back', 'Get a Reward Token'];
 
 export default function VerticalLinearStepper() {
     const classes = useStyles();
@@ -37,7 +37,7 @@ export default function VerticalLinearStepper() {
     const setActiveStep = (val) => { updateActiveStep(val); updateSubstep(val * 10); }
     const [substep, updateSubstep] = useState(0);
     const setSubstep = (val) => { if (val != substep) updateSubstep(val); }
-    var PoAAddr = userInfo.PoAAddr;
+    var Address = userInfo.PoAAddr;
     if (userInfo.Id == 0 && activeStep != 0) setActiveStep(0);
 
     let stepText = {
@@ -57,23 +57,23 @@ export default function VerticalLinearStepper() {
         31: ["", <div>I'm sorry.  I don't see a record of you sending a token.  It may take a minute or two to register though . . . . </div>, ""],
         32: [<div>Excellent! Your wallet screen will be activated when you click next.</div>, ""],
         40: ["", <div>Sign up for the Hive blockchain (and, optionally, Steem). <a target='_blank' href='https://signup.hive.io/'>Hive</a> <a target='_blank' href='https://signup.steemit.com/'>Steem</a></div>],
-        41: ["", <div>What user name(s) did you select?</div>, ""],
+        41: ["", <div>What user name(s) did you register?  In the future, this could also be done from Your Wallet.</div>, ""],
         42: ["", <div>I'm sorry.  That Hive username does not appear to be valid.</div>, ""],
         43: ["", <div>I'm sorry.  That Steem username does not appear to be valid.</div>, ""],
         44: [<div>Excellent! If you blog, a number of GBA-related accounts will upvote you for money (coming May 15th)</div>, ""],
-        50: ["", <div>Let's connect to Sokol and get some Ether</div>],
-        51: ["", <div>I'm sorry.  I don't see any Sokol ether in your wallet.</div>, ""],
-        52: [<div>Excellent! You'll need that Sokol ether shortly.</div>, ""],
-        60: ["", <div>Use your wallet to send some Play tokens to Sokol </div>],
-        61: ["", <div>I'm sorry.  I don't see any Play tokens in your Sokol wallet.</div>, ""],
-        62: ["", <div>Great! Now use your wallet to send them back now.</div>],
-        63: ["", <div>I'm sorry.  I don't see any transfers for you from Sokol.</div>, ""],
-        64: [<div>Fantastic!  Sending tokens across blockchains isn't so hard, is it?</div>, ""],
-        70: ["", <div>Use your wallet to send some Play tokens to Hive and/or Steem. </div>],
-        71: ["", <div>I'm sorry.  I don't see any Play tokens in your Hive or Steem wallets.</div>, ""],
-        72: ["", <div>Excellent! Let's send them back now.</div>],
-        73: ["", <div>I'm sorry.  I don't see any transfers for you from Hive or Steem.</div>, ""],
-        74: [<div>Great!  Even non-Ethereum blockchains can send and receive GBA tokens.</div>, ""],
+        50: ["", <div>Use your wallet to send some Play tokens to Hive and/or Steem. </div>],
+        51: ["", <div>I'm sorry.  I don't see any Play tokens in your Hive or Steem wallets.</div>, ""],
+        52: ["", <div>Excellent! Let's send them back now.</div>],
+        53: ["", <div>I'm sorry.  I don't see any transfers for you from Hive or Steem.</div>, ""],
+        54: [<div>Great!  Even non-Ethereum blockchains can send and receive GBA tokens.</div>, ""],
+        60: ["", <div>Let's connect to Sokol and get some Ether</div>],
+        61: ["", <div>I'm sorry.  I don't see any Sokol ether in your wallet.</div>, ""],
+        62: [<div>Excellent! You'll need that Sokol ether shortly.</div>, ""],
+        70: ["", <div>Use your wallet to send some Play tokens to Sokol </div>],
+        71: ["", <div>I'm sorry.  I don't see any Play tokens in your Sokol wallet.</div>, ""],
+        72: ["", <div>Great! Now use your wallet to send them back now.</div>],
+        73: ["", <div>I'm sorry.  I don't see any transfers for you from Sokol.</div>, ""],
+        74: [<div>Fantastic!  Sending tokens across blockchains isn't so hard, is it?</div>, ""],
         80: ["", <div>It's time send some tokens from Hive and/or Steem to Sokol. </div>],
         81: ["", <div>I'm sorry.  I don't see any Hive/Steem to Sokol transfers for you.</div>, ""],
         82: ["", <div>Excellent! Let's send them back now.</div>],
@@ -95,7 +95,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
         else {
             var accounts = await web3.eth.getAccounts();
             if (accounts.length == 0) setSubstep(12);
-            else { PoAAddr = accounts[0]; cb(); }
+            else { Address = accounts[0]; cb(); }
         };
     }
 
@@ -113,7 +113,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
                 if (val == undefined || val == '') return;
                 checkWeb3(() => {
                     const contr = new web3.eth.Contract(gbaToken.abi, config.playToken.address, { data: gbaToken.bytecode })
-                    contr.methods.balanceOf(PoAAddr).call((err, bal) => {
+                    contr.methods.balanceOf(Address).call((err, bal) => {
                         if (err) alert("balanceOf ERROR: " + err);
                         else if (Math.round(val * 100) != bal) { setSubstep(21); } else { setSubstep(22); setVal(''); }
                     });
@@ -128,13 +128,31 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
                 if (substep == 40 && !retry) return;
                 if (retry) { setSubstep(41); return; }
                 if (val == undefined || val == '') return;
-                alert('https://hive.blog/@' + val);
-                if (substep < 43) axios.get('https://steemit.com/@' + val).then(() => { alert("hive good"); setSubstep(43); })
-                    .catch((error) => { alert("hive bad"); alert(error); setSubstep(42); });
+                if (substep < 43) {
+                    var hive = require("@hiveio/hive-js");
+                    hive.api.setOptions({ url: config.hiveUrl });
+                    hive.config.set('alternative_api_endpoints', config.hiveAlts);
+                    hive.api.getAccounts([val], function (err, result) {
+                        if (result.length) {
+                            axios.post(config.apiUrl + '/api/user/update', {
+                                "GBAId": userInfo.GBAId, "step": activeStep, "Address": val, "BChain": 2
+                            })
+                            setSubstep(43);
+                        } else setSubstep(42);
+                    });
+                }
                 if (substep < 43) return;
                 if (val2 == undefined || val2 == '') { setSubstep(44); return; }
-                axios.get('https://steemit.com/@' + val2).then(() => { alert("steem good"); setSubstep(44); })
-                    .catch(function (error) { alert("steem bad"); })
+                var steem = require("steem");
+                steem.api.setOptions({ url: config.steemUrl });
+                steem.api.getAccounts([val2], function (err, result) {
+                    axios.post(config.apiUrl + '/api/user/update', {
+                        "GBAId": userInfo.GBAId, "step": activeStep, "Address": val2, "BChain": 3
+                    })
+                    if (result.length) {
+                        setSubstep(44);
+                    }
+                });
                 break;
         }
     }
@@ -142,7 +160,9 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
     const handleNext = () => {
         if (!activeStep) { setActiveStep(1); return; };
         if (activeStep > userInfo.StatusId)
-            axios.post(config.apiUrl + '/api/user/tokenTut', { "GBAId": userInfo.GBAId, "step": activeStep, "PoAAddr": PoAAddr }).then((response) => {
+            axios.post(config.apiUrl + '/api/user/tokenTut', {
+                "GBAId": userInfo.GBAId, "step": activeStep, "Address": Address, "BChain": 1
+            }).then((response) => {
                 // alert("updated " + JSON.stringify(response.data));
                 cookies.set('userInfo', response.data, { path: '/', maxAge: 10000000 })
                 setUserInfo(response.data);

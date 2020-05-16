@@ -18,14 +18,33 @@ const mui_datatables_1 = __importDefault(require("mui-datatables"));
 const axios_1 = __importDefault(require("axios"));
 const config = require('../../config');
 const PageTitle_1 = __importDefault(require("../../components/PageTitle"));
+const SendDialog_1 = __importDefault(require("../../components/Dialogs/SendDialog"));
 function Wallet() {
     const [userInfo, setUserInfo] = useGlobal("userInfo");
-    const [tableData, setTableData] = react_1.useState([]);
+    const [table1Data, setTable1Data] = react_1.useState([]);
+    const [table2Data, setTable2Data] = react_1.useState([]);
     const [loaded, setLoaded] = react_1.useState(false);
     react_1.useEffect(() => {
-        axios_1.default.post(config.apiUrl + '/api/user/wallet', { "MemberId": userInfo.Id }).then(res => { setTableData(res.data); setLoaded(true); })
+        axios_1.default.post(config.apiUrl + '/api/user/wallet', { "MemberId": userInfo.Id }).then(res => {
+            setTable1Data(res.data[0].table1);
+            setTable2Data(res.data[0].table2);
+            setLoaded(true);
+        })
             .catch(err => { alert(err.message); setLoaded(true); });
     }, []);
+    function renderValue(value, meta, update) {
+        var tokenAcct = meta.rowData[1] + "|" + meta.rowData[2] + "|" + meta.rowData[3];
+        return (react_1.default.createElement(SendDialog_1.default, { tokenAcct: tokenAcct }));
+    }
+    ;
+    var columns = [
+        { name: 'options', options: { display: false, viewColumns: false, filter: false, sort: false, searchable: false, print: false, download: false } },
+        { label: 'Token', name: 'Token' },
+        { label: 'Chain', name: 'Chain' },
+        { label: 'Balance', name: 'Balance' },
+        { label: 'Address', name: 'Addr' },
+        { label: '', name: '', options: { customBodyRender: renderValue } }
+    ];
     if (userInfo.StatusId < 3) {
         return (react_1.default.createElement("div", null, " You need to complete the Token Tutorial through Step 4. Send Tokens to active your wallet."));
     }
@@ -34,7 +53,9 @@ function Wallet() {
             react_1.default.createElement(PageTitle_1.default, { title: "Wallet" }),
             react_1.default.createElement(core_1.Grid, { container: true, spacing: 4 },
                 react_1.default.createElement(core_1.Grid, { item: true, xs: 12 },
-                    react_1.default.createElement(mui_datatables_1.default, { title: "Transactions", data: tableData, columns: ["Token", "Amount", "Memo", "Name", "Chain", "Addr", "DTS"], options: { filterType: "checkbox", } })))));
+                    react_1.default.createElement(mui_datatables_1.default, { title: "Account Balances", data: table1Data, columns: columns, options: { filterType: "checkbox", } })),
+                react_1.default.createElement(core_1.Grid, { item: true, xs: 12 },
+                    react_1.default.createElement(mui_datatables_1.default, { title: "Transactions", data: table2Data, columns: ["Token", "My_Chain", "My_Addr", "Amount", "Balance", "Memo", "Their_Name", "Their_Chain", "Their_Addr", "Date_Time"], options: { filterType: "checkbox", } })))));
     }
     else {
         return (react_1.default.createElement("div", null, " Loading... "));

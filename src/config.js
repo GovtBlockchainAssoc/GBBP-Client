@@ -21,7 +21,11 @@ module.exports = {
     addrKovan: 'https://kovan.infura.io/v3/4707197d3863444c8fab719ee7b57189',
     addrGoerli: 'https://goerli.infura.io/v3/4707197d3863444c8fab719ee7b57189',
     loginServer: "http://www.gbaglobal.net/",
-    clientId: "9tzz9VKZ0mIg2mWEJvZGKcsxfxaHXhvrtR37Y9G3",
-    redirectUrl: "https://gba-gbbp.azurewebsites.net"
+    clientId: "ILk0iMUPYCwbXgqhtMzEg743j0jAatR8zmEvz07g",
+    redirectUrl: "https://gba-gbbp.azurewebsites.net",
+    hiveUrl: 'https://anyx.io',
+    hiveAlts: ['https://api.hive.blog', 'https://api.pharesim.me', 'https://rpc.ausbit.dev',
+        'https://api.hivekings.com', 'https://api.openhive.network'],
+    steemUrl: 'https://api.justyy.com',
 };
 //# sourceMappingURL=config.js.map

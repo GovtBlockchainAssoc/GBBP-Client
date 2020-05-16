@@ -28,7 +28,7 @@ function App() {
     if (cUser != undefined && (userInfo == undefined || cUser.Id != userInfo.Id)) { setUserInfo(cUser); setActiveStep(cUser.StatusId + 1);  }
     let code = new URLSearchParams(window.location.search).get('code');
     if (code != null) {
-        axios.post(config.apiUrl + '/api/user/login', { "code": code }).then((response) => {
+        axios.post(config.apiUrl + '/api/user/gbaLogin', { "code": code }).then((response) => {
             cookies.set('userInfo', response.data, { path: '/', maxAge: 10000000 });
             setUserInfo(response.data);
             window.location.href='/';
