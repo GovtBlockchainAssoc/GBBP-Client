@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { setGlobal } from 'reactn';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import { Button } from "../Wrappers/Wrappers";
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     rightAlign: { textAlign: 'right', verticalAlign: 'top' },
 }));
-
-const config = require('../../config');
-const Web3 = require('web3');
-import axios from "axios";
-import Cookies from "universal-cookie";
-let cookies = new Cookies();
+import { sendTokens } from '../../utils/EtherOps';
 
 export default function sendDialog(props) {
     var acctInfo = props.tokenAcct.split("|");
@@ -19,12 +13,11 @@ export default function sendDialog(props) {
     const handleClickOpen = () => { setOpen(true); };
     const classes = useStyles();
     async function handleSend() {
-        if (!window['ethereum']) { alert("Metamask is either not installed or disabled"); return; }
-        var web3 = new Web3(window['ethereum']);
-        window['ethereum'].enable();
-        var accounts = await web3.eth.getAccounts();
-        if (accounts.length == 0) { alert("You need be logged in to Metamask and allow the connection!"); return; };
-
+        var blockchain = (document.getElementById("blockchain") as HTMLSelectElement).value;
+        var addr = (document.getElementById("addr") as HTMLInputElement).value;
+        var amount = (document.getElementById("amount") as HTMLInputElement).value;
+        var memo = (document.getElementById("memo") as HTMLInputElement).value;
+        sendTokens(acctInfo[0], acctInfo[1], acctInfo[2], blockchain, addr, amount, memo);
         // blockchain code
         alert("Still implementing sexy new SEND TOKENS implementation.  Please check back Monday.");
 

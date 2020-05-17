@@ -15,9 +15,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const core_1 = require("@material-ui/core");
@@ -26,10 +23,7 @@ const styles_1 = require("@material-ui/core/styles");
 const useStyles = styles_1.makeStyles(theme => ({
     rightAlign: { textAlign: 'right', verticalAlign: 'top' },
 }));
-const config = require('../../config');
-const Web3 = require('web3');
-const universal_cookie_1 = __importDefault(require("universal-cookie"));
-let cookies = new universal_cookie_1.default();
+const EtherOps_1 = require("../../utils/EtherOps");
 function sendDialog(props) {
     var acctInfo = props.tokenAcct.split("|");
     const [open, setOpen] = react_1.useState(false);
@@ -37,18 +31,11 @@ function sendDialog(props) {
     const classes = useStyles();
     function handleSend() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!window['ethereum']) {
-                alert("Metamask is either not installed or disabled");
-                return;
-            }
-            var web3 = new Web3(window['ethereum']);
-            window['ethereum'].enable();
-            var accounts = yield web3.eth.getAccounts();
-            if (accounts.length == 0) {
-                alert("You need be logged in to Metamask and allow the connection!");
-                return;
-            }
-            ;
+            var blockchain = document.getElementById("blockchain").value;
+            var addr = document.getElementById("addr").value;
+            var amount = document.getElementById("amount").value;
+            var memo = document.getElementById("memo").value;
+            EtherOps_1.sendTokens(acctInfo[0], acctInfo[1], acctInfo[2], blockchain, addr, amount, memo);
             // blockchain code
             alert("Still implementing sexy new SEND TOKENS implementation.  Please check back Monday.");
             setOpen(false);

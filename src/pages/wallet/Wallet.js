@@ -32,8 +32,10 @@ function Wallet() {
         })
             .catch(err => { alert(err.message); setLoaded(true); });
     }, []);
+    function shortenValue(value, meta, update) { return ('...' + value.slice(-6)); }
+    ;
     function renderValue(value, meta, update) {
-        var tokenAcct = meta.rowData[1] + "|" + meta.rowData[2] + "|" + meta.rowData[3];
+        var tokenAcct = meta.rowData[1] + "|" + meta.rowData[2] + "|" + meta.rowData[4];
         return (react_1.default.createElement(SendDialog_1.default, { tokenAcct: tokenAcct }));
     }
     ;
@@ -42,8 +44,21 @@ function Wallet() {
         { label: 'Token', name: 'Token' },
         { label: 'Chain', name: 'Chain' },
         { label: 'Balance', name: 'Balance' },
-        { label: 'Address', name: 'Addr' },
+        { label: 'Address', name: 'Addr', options: { customBodyRender: shortenValue } },
         { label: '', name: '', options: { customBodyRender: renderValue } }
+    ];
+    var columns2 = [
+        { name: 'options', options: { display: false, viewColumns: false, filter: false, sort: false, searchable: false, print: false, download: false } },
+        { label: 'Token', name: 'Token' },
+        { label: 'My Chain', name: 'My_Chain' },
+        { label: 'My Addr', name: 'My_Addr', options: { customBodyRender: shortenValue } },
+        { label: 'Amount', name: 'Amount' },
+        { label: 'Balance', name: 'Balance' },
+        { label: 'Memo', name: 'Memo' },
+        { label: 'Their Name', name: 'Their_Name' },
+        { label: 'Their Chain', name: 'Their_Chain' },
+        { label: 'Their Addr', name: 'Their_Addr', options: { customBodyRender: shortenValue } },
+        { label: 'Completed', name: 'Date_Time' }
     ];
     if (userInfo.StatusId < 3) {
         return (react_1.default.createElement("div", null, " You need to complete the Token Tutorial through Step 4. Send Tokens to active your wallet."));
@@ -55,7 +70,7 @@ function Wallet() {
                 react_1.default.createElement(core_1.Grid, { item: true, xs: 12 },
                     react_1.default.createElement(mui_datatables_1.default, { title: "Account Balances", data: table1Data, columns: columns, options: { filterType: "checkbox", } })),
                 react_1.default.createElement(core_1.Grid, { item: true, xs: 12 },
-                    react_1.default.createElement(mui_datatables_1.default, { title: "Transactions", data: table2Data, columns: ["Token", "My_Chain", "My_Addr", "Amount", "Balance", "Memo", "Their_Name", "Their_Chain", "Their_Addr", "Date_Time"], options: { filterType: "checkbox", } })))));
+                    react_1.default.createElement(mui_datatables_1.default, { title: "Transactions", data: table2Data, columns: columns2, options: { filterType: "checkbox", } })))));
     }
     else {
         return (react_1.default.createElement("div", null, " Loading... "));

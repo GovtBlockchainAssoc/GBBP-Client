@@ -21,18 +21,34 @@ export default function Wallet() {
             .catch(err => { alert(err.message); setLoaded(true) })
     }, []);
 
+    function shortenValue(value, meta, update) { return ('...' + value.slice(-6)) };
     function renderValue(value, meta, update) {
-        var tokenAcct = meta.rowData[1] + "|" + meta.rowData[2] + "|" + meta.rowData[3];
+        var tokenAcct = meta.rowData[1] + "|" + meta.rowData[2] + "|" + meta.rowData[4];
         return (<SendDialog tokenAcct={tokenAcct} />)
     };
+
 
     var columns = [
         { name: 'options', options: { display: false, viewColumns: false, filter: false, sort: false, searchable: false, print: false, download: false } },
         { label: 'Token', name: 'Token' },
         { label: 'Chain', name: 'Chain' },
         { label: 'Balance', name: 'Balance' },
-        { label: 'Address', name: 'Addr' },
+        { label: 'Address', name: 'Addr', options: { customBodyRender: shortenValue } },
         { label: '', name: '', options: { customBodyRender: renderValue } }
+    ];
+
+    var columns2 = [
+        { name: 'options', options: { display: false, viewColumns: false, filter: false, sort: false, searchable: false, print: false, download: false } },
+        { label: 'Token', name: 'Token' },
+        { label: 'My Chain', name: 'My_Chain' },
+        { label: 'My Addr', name: 'My_Addr', options: { customBodyRender: shortenValue } },
+        { label: 'Amount', name: 'Amount' },
+        { label: 'Balance', name: 'Balance' },
+        { label: 'Memo', name: 'Memo' },
+        { label: 'Their Name', name: 'Their_Name' },
+        { label: 'Their Chain', name: 'Their_Chain' },
+        { label: 'Their Addr', name: 'Their_Addr', options: { customBodyRender: shortenValue } },
+        { label: 'Completed', name: 'Date_Time' }
     ];
 
     if (userInfo.StatusId < 3) {
@@ -45,8 +61,7 @@ export default function Wallet() {
                     <MUIDataTable title="Account Balances" data={table1Data} columns={columns} options={{ filterType: "checkbox", }} />
                 </Grid>
                 <Grid item xs={12}>
-                    <MUIDataTable title="Transactions" data={table2Data} columns={["Token", "My_Chain", "My_Addr", "Amount", "Balance", "Memo", "Their_Name", "Their_Chain", "Their_Addr", "Date_Time"]}
-                        options={{ filterType: "checkbox", }} />
+                    <MUIDataTable title="Transactions" data={table2Data} columns={columns2} options={{ filterType: "checkbox", }} />
                 </Grid>
             </Grid>
         </>);
