@@ -1,9 +1,9 @@
 module.exports = {
     localMode: false,                                                       // true mocks log-in since can't accept OAuth callback to localhost
-    apiUrl: "https://gbbp-api.azurewebsites.net",                           // http://localhost:1340 or https://gbbp-api.azurewebsites.net
+    apiUrl: "https://gbbp-api.azurewebsites.net",                                        // http://localhost:1340 or https://gbbp-api.azurewebsites.net
     BCAddr: 'http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540',    // empty string, ws://localhost:8545 for ganache or the addrGBBP address
 
-    playToken: { symbol: 'PLAY', name: 'GBA Play Token', decimals: 2, address: '0xf2E99e3a23741449fA942705F4D504b6a099be8b' },
+    coldStorage: '0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0',
     tokens: ['PLAY'],
     token: {
         PLAY: { symbol: 'PLAY', name: 'GBA Play Token', decimals: 2, address: '0xf2E99e3a23741449fA942705F4D504b6a099be8b' },

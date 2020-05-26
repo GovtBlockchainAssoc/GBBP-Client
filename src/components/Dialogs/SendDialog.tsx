@@ -18,9 +18,6 @@ export default function sendDialog(props) {
         var amount = (document.getElementById("amount") as HTMLInputElement).value;
         var memo = (document.getElementById("memo") as HTMLInputElement).value;
         sendTokens(acctInfo[0], acctInfo[1], acctInfo[2], blockchain, addr, amount, memo);
-        // blockchain code
-        alert("Still implementing sexy new SEND TOKENS implementation.  Please check back Monday.");
-
         setOpen(false);
     };
     const handleClose = () => { setOpen(false); };

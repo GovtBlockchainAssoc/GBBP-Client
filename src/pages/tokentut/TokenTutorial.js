@@ -77,7 +77,7 @@ function VerticalLinearStepper() {
         13: [react_1.default.createElement("div", null, "Okay! Your MetaMask installation is looking good."), ""],
         20: ["", react_1.default.createElement("div", null,
                 "How many PLAY tokens do you have at address ",
-                config.playToken.address,
+                config.token['PLAY'].address,
                 "?")],
         21: ["", react_1.default.createElement("div", null,
                 val,
@@ -156,7 +156,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
                 if (val == undefined || val == '')
                     return;
                 checkWeb3(() => {
-                    const contr = new web3.eth.Contract(gbaToken.abi, config.playToken.address, { data: gbaToken.bytecode });
+                    const contr = new web3.eth.Contract(gbaToken.abi, config.token['PLAY'].address, { data: gbaToken.bytecode });
                     contr.methods.balanceOf(Address).call((err, bal) => {
                         if (err)
                             alert("balanceOf ERROR: " + err);

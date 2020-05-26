@@ -1,32 +1,30 @@
 const config = require('../../src/config');
 const Web3 = require('web3');
-export var web3;
-if (config.addrCurr != '') {                                                        // allow for blockchainless debugging
-    web3 = new Web3(config.addrCurr);
-}
-
+var web3;
+import { replaceErrors } from './debug';
 import * as  gbaToken from '../../../build/contracts/GBAToken.json';
-config.tokens.forEach((tName) => {
-    config.token[tName].contract = new web3.eth.Contract(gbaToken.abi, config.token[tName].address, { data: gbaToken.bytecode })
-});
 
 let taskQ = [];                                                             // blockchain queue set-up
 let lastTx = -1;
 setInterval(checkQ, 1000);
+let inCheckQ = false;
+
 async function checkQ() {
-    if (taskQ.length === 0) return;
-    let { account, tx } = taskQ.shift();
-    alert(account + ' - ' + JSON.stringify(tx));
-    let tcount = await web3.eth.getTransactionCount(account.address);
-    if (tcount === lastTx) return;
+    if (web3 == undefined || taskQ.length === 0 || inCheckQ) return;
+    inCheckQ = true;
+    var account = await getAcct();
+    var tx = taskQ.shift();
+    var tcount = await web3.eth.getTransactionCount(account);
+    if (tcount === lastTx) { inCheckQ = false; return; }
     lastTx = tcount;
-    await tx.send({ from: account.address, gas: 500000, nonce: tcount }).catch((e) => console.log("ethQ tx send ERROR: " + e));
+    await tx.send({ from: account, gas: 500000, nonce: tcount }).catch((e) => alert(JSON.stringify(e, replaceErrors)));
+    inCheckQ = false;
 };
 try { checkQ(); } catch (e) { console.log }
 
 async function getAcct() {
     if (!window['ethereum']) { alert("Metamask is either not installed or disabled"); return ''; }
-    var web3 = new Web3(window['ethereum']);
+    web3 = new Web3(window['ethereum']);
     window['ethereum'].enable();
     var accounts = await web3.eth.getAccounts();
     if (accounts.length == 0) { alert("You need be logged in to Metamask and allow the connection!"); return ''; };
@@ -37,14 +35,13 @@ export async function sendTokens(token, blockchain, address, destBChain, destAdd
     if (blockchain != 'GBA Hub') { alert("Hive/Steem origin"); return; }
     var account = await getAcct();
     if (account == '') return;
-    if (account != 'address') { alert("You must switch to that account in Metamask in order to send from it!"); return; }
+    if (account != address) { alert("You must switch to that account in Metamask in order to send from it!"); return; }
+    if (config.token[token].contract == undefined)
+        config.token[token].contract = await new web3.eth.Contract(gbaToken.abi, config.token[token].address, { data: gbaToken.bytecode })
+    var qty = amount * (10 ** config.token[token].decimals);
     if (blockchain === destBChain) {
-        alert("GBA Hub ==> GBA Hub transfers will be available again on Monday");
-        var tx = config.tokens[token].contract.methods.memoTransferFrom(account, destAddr, amount, memo);
-        // taskQ.push({ account, tx })
+        taskQ.push(config.token[token].contract.methods.memoTransferFrom(account, destAddr, qty, memo));
     } else {
-        alert("GBA Hub ==> Hive transfers will be available Monday");
+        taskQ.push(config.token[token].contract.methods.cbTransferFrom(account, config.coldStorage, qty, destBChain, destAddr, memo));
     }
 };
-
-

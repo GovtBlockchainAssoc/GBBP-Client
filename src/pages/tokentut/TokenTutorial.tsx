@@ -50,7 +50,7 @@ export default function VerticalLinearStepper() {
         11: ["", <div>You need to switch to the GBBP network (http://etht5zt7j-dns-reg1.eastus2.cloudapp.azure.com:8540) in Metamask!</div>],
         12: ["", <div>You need be logged in to Metamask and allow the connection!</div>],
         13: [<div>Okay! Your MetaMask installation is looking good.</div>, ""],
-        20: ["", <div>How many PLAY tokens do you have at address {config.playToken.address}?</div>],
+        20: ["", <div>How many PLAY tokens do you have at address {config.token['PLAY'].address}?</div>],
         21: ["", <div>{val} is not correct.  Try again (don't forget the decimal portion).</div>],
         22: [<div>Excellent! Send a PLAY token and your wallet screen will be activated</div>, ""],
         30: ["", <div>Use Metamask to send yourself a token</div>],
@@ -112,7 +112,7 @@ Hive is likely more hospitable and has doubled in value since the split thus mak
             case 2:
                 if (val == undefined || val == '') return;
                 checkWeb3(() => {
-                    const contr = new web3.eth.Contract(gbaToken.abi, config.playToken.address, { data: gbaToken.bytecode })
+                    const contr = new web3.eth.Contract(gbaToken.abi, config.token['PLAY'].address, { data: gbaToken.bytecode })
                     contr.methods.balanceOf(Address).call((err, bal) => {
                         if (err) alert("balanceOf ERROR: " + err);
                         else if (Math.round(val * 100) != bal) { setSubstep(21); } else { setSubstep(22); setVal(''); }

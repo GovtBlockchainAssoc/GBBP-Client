@@ -36,8 +36,6 @@ function sendDialog(props) {
             var amount = document.getElementById("amount").value;
             var memo = document.getElementById("memo").value;
             EtherOps_1.sendTokens(acctInfo[0], acctInfo[1], acctInfo[2], blockchain, addr, amount, memo);
-            // blockchain code
-            alert("Still implementing sexy new SEND TOKENS implementation.  Please check back Monday.");
             setOpen(false);
         });
     }
